@@ -18,6 +18,22 @@ Registru de decizii. O decizie intră aici doar când e **luată**, cu cine a lu
 
 ---
 
+### D4 — DEC-1…DEC-4 se amână până la Master Audit unic
+**Cine:** Catalin · **Când:** 2026-08-23
+**Motiv:** deciziile de arhitectură luate pe o imagine incompletă riscă să fie greșite. Se așteaptă combinarea: audit cloud + audit local + istoric n8n/server + Control Plane.
+**Consecință:** niciuna dintre DEC-1…DEC-4 nu se execută acum.
+
+### D5 — Ordinea de execuție stabilită
+**Cine:** Catalin · **Când:** 2026-08-23
+
+**P0** — 1. acces comun ChatGPT ↔ Notion · 2. inventar local · 3. combinarea auditurilor · 4. Master Audit unic
+**P1** — 5. `oracle_gateway` verificare și securizare · 6. backup ~170 workflow-uri n8n · 7. Render/servicii suspendabile · 8. Supabase pauzat
+**P2** — 9. infrastructura de comunicare între agenți · 10. execuția automatizărilor
+
+**Obiecție consemnată (Claude Code):** C1 și C3 au fost evaluate ca P0 în `04-RISK-REGISTER.md`. Un secret vizibil în sursa publică este o expunere activă, nu o constatare de audit — nu depinde de completitudinea imaginii, iar privatizarea val-ului durează un minut și e reversibilă. La fel, exportul workflow-urilor este citire pură. Decizia de ordonare aparține owner-ului și se respectă; obiecția rămâne consemnată pentru trasabilitate.
+
+---
+
 ## În așteptare — blochează execuția
 
 ### DEC-1 — Mecanismul de trezire Claude Code
