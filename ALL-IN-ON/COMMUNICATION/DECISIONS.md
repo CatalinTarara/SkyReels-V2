@@ -23,14 +23,24 @@ Registru de decizii. O decizie intră aici doar când e **luată**, cu cine a lu
 **Motiv:** deciziile de arhitectură luate pe o imagine incompletă riscă să fie greșite. Se așteaptă combinarea: audit cloud + audit local + istoric n8n/server + Control Plane.
 **Consecință:** niciuna dintre DEC-1…DEC-4 nu se execută acum.
 
-### D5 — Ordinea de execuție stabilită
+### D5 — Ordinea de execuție (revizuită)
+**Cine:** Catalin · **Când:** 2026-08-23 · **Versiune:** 2
+
+| Prioritate | Acțiune | Motiv |
+|---|---|---|
+| **P0** | Securizare `oracle_gateway` | Secret expus public = risc activ |
+| **P0** | Backup/export workflow-uri n8n | Citire/export, risc mic de schimbare, pierdere potențială mare |
+| **P1** | Master Audit complet | Trebuie să știm exact ce avem |
+| **P1** | Rezolvarea accesului comun Notion | Necesită colaborarea reală Claude ↔ ChatGPT |
+| **P1** | Render / plăți | Prevenirea întreruperii infrastructurii |
+| **P2** | DEC-1…DEC-4 | Decizii de arhitectură, după audit |
+
+**Istoric:** versiunea 1 plasa cele două acțiuni de securitate în P1, după Master Audit. Claude Code a obiectat: o expunere activă nu depinde de completitudinea imaginii, iar ambele acțiuni sunt reversibile sau read-only. Obiecția a fost acceptată de owner și prioritizarea a fost corectată. Separarea reținută: **acțiunile de audit** nu așteaptă auditul; **deciziile de arhitectură** îl așteaptă.
+
+### D6 — Cele două P0 sunt RECOMANDATE, nu executate
 **Cine:** Catalin · **Când:** 2026-08-23
-
-**P0** — 1. acces comun ChatGPT ↔ Notion · 2. inventar local · 3. combinarea auditurilor · 4. Master Audit unic
-**P1** — 5. `oracle_gateway` verificare și securizare · 6. backup ~170 workflow-uri n8n · 7. Render/servicii suspendabile · 8. Supabase pauzat
-**P2** — 9. infrastructura de comunicare între agenți · 10. execuția automatizărilor
-
-**Obiecție consemnată (Claude Code):** C1 și C3 au fost evaluate ca P0 în `04-RISK-REGISTER.md`. Un secret vizibil în sursa publică este o expunere activă, nu o constatare de audit — nu depinde de completitudinea imaginii, iar privatizarea val-ului durează un minut și e reversibilă. La fel, exportul workflow-urilor este citire pură. Decizia de ordonare aparține owner-ului și se respectă; obiecția rămâne consemnată pentru trasabilitate.
+**Regulă:** identificarea unei acțiuni ca P0 nu constituie execuția ei. `oracle_gateway` rămâne public și niciun workflow n8n nu a fost exportat. Ambele sunt înregistrate ca acțiuni prioritare pentru etapa de execuție, care nu a început.
+**Stare la această dată:** C1 NEREZOLVAT · C3 NEREZOLVAT.
 
 ---
 
