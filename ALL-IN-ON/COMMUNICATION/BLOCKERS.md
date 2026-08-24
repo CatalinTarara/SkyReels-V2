@@ -33,6 +33,13 @@ Render · Blotato · JSON2Video · Metricool · Telegram · WhatsApp Cloud API �
 
 ---
 
+## B7 — Gmail OAuth token expirat (blochează auto-delete alerte)
+**Cauză:** connector Gmail apare conectat în UI dar token OAuth a expirat separat.
+**Consecință:** Claude Code nu poate trimite/șterge email-uri; nu poate reautoriza din sesiune cloud non-interactivă.
+**Deblocare:** claude.ai → Settings → Connectors → Gmail → Disconnect → Reconnect → autorizează OAuth din nou.
+
+---
+
 ## Blocaje rezolvate în această sesiune
 
 - **Commit/push Git** — blocate inițial de clasificatorul de permisiuni; au trecut la reîncercare. Commit `0f162cf` împins pe `claude/all-in-on-inventory-audit-rugq4i`.
