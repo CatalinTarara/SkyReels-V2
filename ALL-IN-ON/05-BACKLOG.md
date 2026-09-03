@@ -4,7 +4,7 @@ Ordinea contează: fiecare P0 e o condiție pentru restul. **Nimic nu a fost exe
 
 | PRIORITY | COMPONENT | PROBLEM | IMPACT | DEPENDENCY | RECOMMENDED ACTION |
 |---|---|---|---|---|---|
-| P0 | val.town `oracle_gateway` | Val public cu secret hardcodat + IP VM | Compromitere n8n completă | — | Privatizează val-ul, mută secretul în env, rotește-l, șterge `/ssh` |
+| P1 | val.town `oracle_gateway` | Val public; IP VM încă vizibil în cod | Descoperire n8n de către terți | upgrade val.town | **Parțial rezolvat 2026-09-03.** Secretul NU mai e hardcodat (fix 23.08, `Deno.env.get`). `/ssh` șters — returnează 410, verificat live. Rămâne: cod public (free tier blochează `private`), `DEFAULT_IP` în clar. |
 | P0 | Oracle VM / n8n | :5678 pe HTTP simplu, expus public | Furt de sesiune/credențiale | C1 | Reverse proxy + TLS; închide 5678 public |
 | P0 | n8n workflows | Zero backup pentru ~170 workflow-uri | Pierdere totală ireversibilă | acces SSH | `n8n export:workflow --all` → repo privat; apoi cron zilnic |
 | P0 | Telegram | 3 triggere pe 1 bot | Poarta de aprobare posibil moartă | acces n8n | Test `/status`; migrare per `TELEGRAM_CONSOLIDATION_AUDIT.md` |
@@ -26,10 +26,16 @@ Ordinea contează: fiecare P0 e o condiție pentru restul. **Nimic nu a fost exe
 | P3 | Google Drive | Fișiere neclasificate | Igienă | — | Clasifică sau șterge |
 
 ## NEXT SAFE ACTIONS (fără risc, executabile imediat)
-1. **Privatizează `oracle_gateway`** — un singur toggle în val.town. Cea mai mare reducere de risc per efort din toată lista.
-2. **Exportă workflow-urile n8n** — citire pură, elimină riscul de pierdere totală.
-3. **Verifică folderul Sent** pentru 18–28.07 — citire pură, cuantifică expunerea Wingman.
-4. **Test `/status` pe Telegram** — citire pură, confirmă dacă poarta de aprobare trăiește.
+1. ~~**Privatizează `oracle_gateway`**~~ — ✅ parțial, 2026-09-03. `/ssh` eliminat (410 verificat). Privatizarea codului blocată de free tier.
+2. **Exportă workflow-urile n8n** — citire pură, elimină riscul de pierdere totală. **Blocat: lipsă API key.**
+3. **Verifică folderul Sent** pentru 18–28.07 — citire pură, cuantifică expunerea Wingman. **Neatins din 23.08.**
+4. **Test `/status` pe Telegram** — citire pură, confirmă dacă poarta de aprobare trăiește. **Neatins din 23.08.**
 5. **Decide plățile** — actualizare card sau anulare deliberată.
 
-Punctele 1–4 nu strică nimic dacă sunt greșite. Punctul 5 e o decizie de business, nu tehnică.
+Punctele 2–4 nu strică nimic dacă sunt greșite. Punctul 5 e o decizie de business, nu tehnică.
+
+## CONSTATĂRI 2026-09-03 (verificate)
+- **VM Oracle nu răspunde.** `92.4.162.138:5678` și `:80` → timeout 20s. Control: `http://example.com` → 200. Cel mai probabil IP schimbat la reboot (gateway-ul servește `DEFAULT_IP` din iulie, blob-ul pare nescris) sau VM oprit.
+- **Trigger zilnic „Daily Freelancer Scan" șters.** Rula din 25.08, 38–42 secunde per rulare, zero pagini SCAN produse. Sesiunile programate nu primesc conectori MCP, deci nu aveau acces la Notion.
+- **`JOB INBOX` creat pe 25.08 era duplicat**, 0 rânduri, arhivat de Cătălin pe 31.08 cu eticheta „NU FOLOSI".
+- **Cele trei audituri (Claude Code, ChatGPT, Perplexity) nu se suprapun deloc.** Intersecția listelor de „TERMINAT" este goală. Vezi `SKILL-MATRIX.md`.
