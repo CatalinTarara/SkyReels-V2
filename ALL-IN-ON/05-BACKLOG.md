@@ -28,7 +28,7 @@ Ordinea contează: fiecare P0 e o condiție pentru restul. **Nimic nu a fost exe
 ## NEXT SAFE ACTIONS (fără risc, executabile imediat)
 1. ~~**Privatizează `oracle_gateway`**~~ — ✅ parțial, 2026-09-03. `/ssh` eliminat (410 verificat). Privatizarea codului blocată de free tier.
 2. **Exportă workflow-urile n8n** — citire pură, elimină riscul de pierdere totală. **Blocat: lipsă API key.**
-3. **Verifică folderul Sent** pentru 18–28.07 — citire pură, cuantifică expunerea Wingman. **Neatins din 23.08.**
+3. ~~**Verifică folderul Sent** pentru 18–28.07~~ — ✅ făcut 2026-09-03. ~61 thread-uri de cold outreach către firme reale (retail RO, avocatură US/UK, agenții AI), cu follow-up-uri. Cel puțin un template afirmă „12000+ production AI workflows" — fals, zero clienți. Destinatari nominali din UE. Bounce-uri: `freimestate.ro`, `easysales.ai`, `catalin@freelancerhubpro.org` (adresa proprie nu primește mail). **Nu realimenta Wingman; scoate afirmațiile nedovedite din orice template.**
 4. **Test `/status` pe Telegram** — citire pură, confirmă dacă poarta de aprobare trăiește. **Neatins din 23.08.**
 5. **Decide plățile** — actualizare card sau anulare deliberată.
 
