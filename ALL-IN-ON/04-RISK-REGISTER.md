@@ -16,6 +16,7 @@ Format per problemă: PROBLEMĂ · IMPACT · DOVADĂ · LOCAȚIE · DEPENDENȚE 
 **RISC:** Compromitere completă a instanței n8n și a tuturor credențialelor din credential store (Telegram, Notion, Airtable, WhatsApp, OpenAI).
 **RECOMANDARE:** Trece val-ul pe `privacy: private` + `httpPrivacy: restricted`; mută secretul în env var (val.town suportă); rotește secretul; elimină `/ssh` (nu publica numele cheii). Apoi restricționează portul 5678 la nivel de Security List Oracle.
 **PRIORITATE: P0**
+**STATUS 2026-09-03:** Parțial rezolvat. Secretul nu mai e în sursă (`Deno.env.get`, din 23.08). `/ssh` eliminat → 410, verificat live. Rămân: cod public (free tier blochează `private`), `DEFAULT_IP` în clar, `/n8n` redirect pe HTTP. Prioritate coborâtă la P1.
 
 ### C2 — n8n expus pe HTTP simplu, fără TLS, direct pe internet
 **PROBLEMĂ:** UI-ul n8n e servit pe `http://<IP>:5678`, fără reverse proxy și fără certificat.
@@ -54,6 +55,7 @@ Format per problemă: PROBLEMĂ · IMPACT · DOVADĂ · LOCAȚIE · DEPENDENȚE 
 **RISC:** Reclamații GDPR, blacklist de domeniu, daune de brand — deja produse, nu potențiale.
 **RECOMANDARE:** Verifică manual folderul **Sent** al conturilor pentru 18–28.07 și cuantifică. NU realimenta credite până atunci. Nu am făcut această verificare — necesită decizia ta.
 **PRIORITATE: P0**
+**STATUS 2026-09-03:** Auditat. ~61 thread-uri trimise 18–28.07 către firme reale (retail RO, avocatură US/UK, agenții AI), cu follow-up-uri, inclusiv destinatari nominali din UE. Cel puțin un template afirmă „12000+ production AI workflows" — fals. Riscul e confirmat, nu potențial. Rămân: verificarea răspunsurilor primite și corectarea afirmației față de cei care au răspuns.
 
 ---
 
